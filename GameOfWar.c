@@ -1,23 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define MAX 10
+#include <string.h>
+
+#define NAMES 10
 
 void numberOfPlayers();
 void numberOfCards();
+void afterRoundEnds();
+void printPlayerNames();
 int specialRule();
+
+//global variables
+char playerNames[NAMES][10] = { "" };
+char *ptr;
+char ptr = &playerNames[NAMES][10];
+
 
 int main()
 {
-	char playerNames[MAX];
 	int players = 0;
 	int i = 0;
 	int orderOfPlayers = 0;
 	int choiceOne = 0;
-	char *ptr;
+	char choiceTwo = ' ';
 	int roundNumber = 0;
-
-	ptr = &playerNames[0];
+	char choiceThree = ' ';
 
 	numberOfPlayers();
 	scanf("%d", &choiceOne);
@@ -38,14 +46,25 @@ int main()
 			printf("Uh oh, we cannot allow more than 10 players!!\n");
 		}
 		else
-		{	do
+		{	
+			numberOfPlayers();
+			printPlayerNames();
+			printf("Are these player names correct? Y/N\n");
+			if(scanf("%c", &choiceTwo) <= 0)
+				choiceTwo = 'n';
+			else
 			{
-				printf("Please enter in your player names or -1 to terminate\n");
-
-			} while (/* condition */);
-				
-			//generate and assign random numbers between 1 - 13 for each player
-
+				printf("Before the game starts would you like to load a saved game? Y\N");
+				scanf("%c", &choiceThree);
+				if(choiceThree == 'Y' || choiceThree == 'y')
+				{
+					//code to retrieve a saved game
+				}
+				else
+				{
+					//code to load a regular game
+				}
+			}
 		}
 	}
 
@@ -55,7 +74,21 @@ int main()
 //start of functions
 void numberOfPlayers()
 {
-	printf("Please enter in the number of players or -1 to resume saved game\n");
+	for(int i = 0; i < NAMES; i++)
+	{
+		printf("Please enter in your player names\n");
+		if(!fgets(playerNames[i], sizeof playerNames[i], stdin))
+		break;
+		size_t len = strlen(playerNames[i]);
+		if(playerNames[i][len -1] == '\n')
+			playerNames[i][--len] = 0;
+	}
+}
+
+void printPlayerNames()
+{
+	for(int i = 0; i < int n; i++)
+		printf("Word[%d] : %s\n",i, word[i]);
 }
 
 void numberOfCards()
