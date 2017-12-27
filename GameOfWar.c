@@ -3,18 +3,15 @@
 #include <time.h>
 #include <string.h>
 
-#define NAMES 10
 
-void numberOfPlayers();
+void startRound();
 void numberOfCards();
 void afterRoundEnds();
 void printPlayerNames();
+void choiceToLoadSavedGame();
 int specialRule();
 
 //global variables
-char playerNames[NAMES][10] = { "" };
-char (*ptr)[NAMES][10];
-
 
 int main()
 {
@@ -25,80 +22,39 @@ int main()
 	char choiceTwo = ' ';
 	int roundNumber = 0;
 	char choiceThree = ' ';
-	ptr = &playerNames;
-
-	numberOfPlayers();
-	scanf("%d", &choiceOne);
-
-	if(choiceOne 
-	= -1)
-	{
-		//load save game function
-		
-	}
-	else if(choiceOne <= 0 || !choiceOne == -1)
-	{
-		printf("Please enter in a correct choice\n");
-	}
-	else
-	{
-		if (choiceOne > 10)
-		{
-			printf("Uh oh, we cannot allow more than 10 players!!\n");
-		}
-		else
-		{	
-			numberOfPlayers();
-			printPlayerNames();
-			printf("Are these player names correct? Y/N\n");
-			if(scanf("%c", &choiceTwo) <= 0)
-				choiceTwo = 'n';
-			else
-			{
-				printf("Before the game starts would you like to load a saved game? Y\N");
-				scanf("%c", &choiceThree);
-				if(choiceThree == 'Y' || choiceThree == 'y')
-				{
-					//code to retrieve a saved game
-				}
-				else
-				{
-					//code to load a regular game
-					for(int i = 0; i < 13; i++)
-					{
-						int count =0;
-						printf("Welcome to round %d",count++);
-						//for loop to display the player names and display number between 1 and 13
-
-					}
-				}
-			}
-		}
-		return 0;
-	}
-
-
+	
+	printf("Welcome to game of war\n");
+	printf("***********************\n");
+	choiceToLoadSavedGame();
+	startRound();
+	
 }//end main 
 
 //start of functions
-void numberOfPlayers()
+void startRound()
 {
-	for(int i = 0; i < NAMES; i++)
+	srand(time(NULL));// to reset the seed at the start of ever execution
+	char name[10][8];
+	int i,j, number;
+	printf("Enter in the number of players playing\n");
+	scanf("%d",&number);
+	printf("Enter in %d names\n",number);
+	for(i = 0; i < number; i++)
 	{
-		printf("Please enter in your player names or -1 to load a saved game\n");
-		if(!fgets(playerNames[i], sizeof playerNames[i], stdin))
-		break;
-		size_t len = strlen(playerNames[i]);
-		if(playerNames[i][len -1] == '\n')
-			playerNames[i][--len] = 0;
+		scanf("%s",name[i]);
+	}
+	
+	//print names and assign random number between 1 and 13
+	for(i = 0; i < number; i++)
+	{
+		printf("%s\t%d\n",name[i], rand() % 13 + 1);
+		
 	}
 }
 
+
 void printPlayerNames()
 {
-	int n, i;
-	for( i = 0; i < n; i++)
-	printf("playerNames[%d] : %s\n",i,playerNames[i]);
 }
 
 void numberOfCards()
@@ -112,11 +68,46 @@ void numberOfCards()
 
 void afterRoundEnds()
 {
-	printf("Do you wish to save current state?\n");
+	char choice[2] = " ";
+	printf("Do you wish to save current state? chosing No will disable saving all future rounds Y/N\n");
+	if(choice == 'Y' || choice == 'y')
+	{
+		//print out round score to result.txt
+	}
+	else
+	{
+		printf("You've chosen not to save");
+	}
+	
 }
 
 int specialRule()
 {
 	//if players tie points are carried over to next round
 	//if its the last round then points are "lost on the battlefield"
+	return 0;
 }
+
+void loadSavedGame()
+{
+	printf("Hello and welcome to load saved game\n");
+	printf("**************************************\n");
+	//load saved game code
+}
+
+void choiceToLoadSavedGame()
+{
+	int choice;
+	printf("Do you want to load a saved game? 0 for yes 1 for no\n");
+	scanf("%d",&choice);
+	if(choice == 0)
+	{
+		loadSavedGame();
+	}
+	else if(choice == 1)
+	{
+		startRound();
+	}
+	
+}
+
